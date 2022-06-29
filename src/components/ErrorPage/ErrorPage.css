@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  
+  body,
+  html {
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 100%;
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    text-align: center;
+    transform: translateY(-10%);
+  }
+  
+  .container .title {
+    font-size: 160px;
+    margin: 0;
+    font-weight: 900;
+    letter-spacing: 15px;
+    background-image: url(../screens/img/gradient.jpg);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .container .page-not-found {
+    font-size: 30px;
+  }
+  
+  .container .sorry-txt {
+    margin: 1%;
+  }
+  
+  .container .btn {
+    text-decoration: none;
+    padding: 12px;
+    color: white;
+    background-image: url(../screens/img/gradient.jpg);
+    transition: 1.2s;
+    border-radius: 1pc 3pc 0pc 7pc;
+    box-shadow: 1pc 1pc rgb(206, 206, 197);
+    cursor: pointer;
+    width: 30%;
+  }
+  
+  .btn:hover {
+    background: rgb(206, 206, 197);
+    background: linear-gradient(
+      60deg,
+      rgb(130, 204, 221) 0%,
+      rgb(206, 206, 197) 30%,
+      rgb(130, 204, 221) 100%
+    );
+  }
+  
