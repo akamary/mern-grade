@@ -41,8 +41,8 @@ const RegisterScreen = ({history})=> {
     }
     try {
       console.log(type, username, password);
-      const {data} = await axios.post("/api/auth/register", {username, password, type}, config);
-      axios.get('/api/auth/login').then((allUsers) => {
+      const {data} = await axios.post("https://mern-grade.herokuapp.com/api/auth/register", {username, password, type}, config);
+      axios.get('https://mern-grade.herokuapp.com/api/auth/login').then((allUsers) => {
         setUsersList(allUsers.data);
         ans = allUsers.data.find(user =>user.username===username);
         setValue(ans.username);

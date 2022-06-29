@@ -32,9 +32,9 @@ import { UserContext } from '../../UserContext';
     };
     try {
 
-      const {data} = await axios.post("/api/auth/login", {username, password}, config);
+      const {data} = await axios.post("https://mern-grade.herokuapp.com/api/auth/login", {username, password}, config);
 
-      axios.get('/api/auth/login').then((allUsers) => {
+      axios.get('https://mern-grade.herokuapp.com/api/auth/login').then((allUsers) => {
       setUsersList(allUsers.data);
       ans = allUsers.data.find(user =>user.username===username);
       setValue(ans.username);

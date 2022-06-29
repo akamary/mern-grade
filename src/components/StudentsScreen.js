@@ -31,7 +31,7 @@ import { UserContext } from '../UserContext';
             }
 
         try {
-            const {data} = await axios.get("/api/private", config);
+            const {data} = await axios.get("https://mern-grade.herokuapp.com/api/private", config);
             setPrivateData(data.data);
         } catch (error) {
             localStorage.removeItem("authToken");
