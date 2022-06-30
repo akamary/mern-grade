@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { UserContext } from './UserContext.js';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { UserContext } from './UserContext.js';
+import './index.css';
+
 
 ReactDOM.render(
   <React.StrictMode>

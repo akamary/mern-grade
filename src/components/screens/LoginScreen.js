@@ -1,12 +1,25 @@
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginScreen.css";
 import "./background.css";
-import { UserContext } from '../../UserContext';
+import axios from "axios";
+import PersonIcon from "@mui/icons-material/Person";
+import { UserContext } from "../../UserContext";
+import {
+  Avatar,
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import LockIcon from "@mui/icons-material/Lock";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
 
-  const LoginScreen = ({history})=> {
-  let navigate=useNavigate();
+const LoginScreen = ({ history }) => {
+  let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
@@ -14,10 +27,10 @@ import { UserContext } from '../../UserContext';
   const [usersList, setUsersList] = useState([]);
 
   let ans;
-  const {value, setValue} = useContext(UserContext);
+  const { value, setValue } = useContext(UserContext);
 
   useEffect(() => {
-    if(localStorage.getItem("authToken")) {
+    if (localStorage.getItem("authToken")) {
       navigate("/");
     }
   }, [history]);
@@ -27,23 +40,26 @@ import { UserContext } from '../../UserContext';
 
     const config = {
       header: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     };
     try {
+      const { data } = await axios.post(
+        "https://mern-grade.herokuapp.com/api/auth/login",
+        { username, password },
+        config
+      );
 
-      const {data} = await axios.post("https://mern-grade.herokuapp.com/api/auth/login", {username, password}, config);
-
-      axios.get('https://mern-grade.herokuapp.com/api/auth/login').then((allUsers) => {
-      setUsersList(allUsers.data);
-      ans = allUsers.data.find(user =>user.username===username);
-      setValue(ans.username);
-      localStorage.setItem("authToken", data.token);
-      if (ans.type=="Lecturer")
-        navigate("/lecturer");
-      else
-        navigate("/student");
-    });
+      axios
+        .get("https://mern-grade.herokuapp.com/api/auth/login")
+        .then((allUsers) => {
+          setUsersList(allUsers.data);
+          ans = allUsers.data.find((user) => user.username === username);
+          setValue(ans.username);
+          localStorage.setItem("authToken", data.token);
+          if (ans.type == "Lecturer") navigate("/lecturer");
+          else navigate("/student");
+        });
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -51,35 +67,45 @@ import { UserContext } from '../../UserContext';
       }, 5000);
     }
   };
+  return(
+  <div className="background-image">
+      <div className="login-screen">
+        <form onSubmit={loginHandler} className="login-screen__form">
+          <h3 className="login-screen__title">Sign in</h3>
+          {error && <span className="error-message">{error}</span>}
+          <div className="form-group" >
+            <label htmlFor="name">Username:</label>
+            <input startIcon={<PersonIcon />}
+              type="text"
+              required
+              id="name"
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-  return (
-    <div className="background-image">
-    <div className= "login-screen">
-    <form onSubmit={loginHandler} className="login-screen__form">
-      <h3 className="login-screen__title">Login - Grades System</h3>
-      {error && <span className="error-message">{error}</span>}
-      <div className="form-group">
-        <label htmlFor="name">Username:</label>
-        <input type="text" 
-        required id="name" 
-        placeholder="Enter username" 
-        value={username} 
-        onChange={(e) => setUsername(e.target.value)}/>
-      </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              required
+              id="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="password">Password:</label>
-        <input type="password" 
-        required id="password" 
-        placeholder="Enter password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)}/>
+          <button type="submit" className="btn btn-primary">
+            Sign in
+          </button>
+          <span className="login-screen__subtext">
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </span>
+        </form>
       </div>
-
-      <button type= "submit" className= "btn btn-primary">Login</button>
-      <span className="login-screen__subtext">Don't have an account? <Link to="/register">Register</Link></span>
-      </form></div>
-      </div>
-      );
+    </div> 
+  );
 };
 export default LoginScreen;

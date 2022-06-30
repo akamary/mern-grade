@@ -2,11 +2,12 @@ import React from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import LoginScreen from "./components/screens/LoginScreen.js";
 import RegisterScreen from "./components/screens/RegisterScreen.js";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
 import LecturerScreen from "./components/LecturerScreen.js";
-import StudentsScreen from './components/StudentsScreen';
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 import { UserContext } from './UserContext.js';
 import { useState , useMemo} from 'react';
+import StudentsScreen from './components/StudentsScreen';
+
 
 const App = () => {
   const [value, setValue] = useState(null)

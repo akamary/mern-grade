@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@mui/material";
 import CurrStudent from "./showCurrStudent/showCurrStudent.js";
+import { Box } from "@mui/system";
 import useStyles from "../styles";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { Box } from "@mui/system";
 import { UserContext } from "../UserContext";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import "./screens/backscreens.css";
 
 const StudentsScreen = ({ history }) => {
@@ -16,7 +16,7 @@ const StudentsScreen = ({ history }) => {
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
   const { value, setValue } = useContext(UserContext);
-  let currUser = value; //holds the name of the current online user
+  let currUser = value; 
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
