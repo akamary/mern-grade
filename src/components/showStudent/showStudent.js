@@ -28,15 +28,15 @@ export default function ShowStudent() {
 
   return (
     <>
-    <h2>All Grades</h2>  
+    <h2>Students Grades</h2>  
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Course</TableCell>
-            <TableCell align="right">Credits</TableCell>
-            <TableCell align="right">Grade</TableCell>
+            <TableCell>Student Name</TableCell>
+            <TableCell align="right">Course Name</TableCell>
+            <TableCell align="right">Course Credits</TableCell>
+            <TableCell align="right"> Course Grade</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>

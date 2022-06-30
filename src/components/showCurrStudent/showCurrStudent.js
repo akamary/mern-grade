@@ -49,7 +49,7 @@ export default function ShowCurrStudent() {
 
   return (
     <>
-      <h2>My Grades</h2>
+      <h2>Grades</h2>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -79,7 +79,7 @@ export default function ShowCurrStudent() {
       </TableContainer>
       <br></br>
       <br></br>
-      <h3>The average is: {(myFunc(), avg)}</h3>
+      <h3>{value}, your average is: {(myFunc(), avg)}</h3>
     </>
   );
 }

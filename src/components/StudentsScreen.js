@@ -52,11 +52,11 @@ const StudentsScreen = ({ history }) => {
   return (
     <div className="background-screens">
       <div className="App">
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
           <AppBar
             className={classes.appBar}
             position="static"
-            color="secondary"
+            style={{backgroundColor: "teal"}}
           >
             <Typography className={classes.heading} variant="h3" align="center">
               Welcome {currUser}!
@@ -66,7 +66,11 @@ const StudentsScreen = ({ history }) => {
           <Grow in>
             <Container>
               <Grid
-                container
+                container 
+                justify="center"
+                align="center"
+                alignItems="center"
+                direction="column"
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
