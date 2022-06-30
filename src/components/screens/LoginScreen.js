@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginScreen.css";
 import "./background.css";
 import axios from "axios";
@@ -16,7 +16,7 @@ import {
 import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+
 
 const LoginScreen = ({ history }) => {
   let navigate = useNavigate();
