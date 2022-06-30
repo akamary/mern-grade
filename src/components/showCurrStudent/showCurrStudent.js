@@ -13,12 +13,12 @@ export default function ShowCurrStudent() {
   const [gradesList, setGradesList] = useState([]);
 
   const { value, setValue } = useContext(UserContext);
-  let sum1 = 0;
-  let sum2 = 0;
+  let cal1 = 0;
+  let cal2 = 0;
   let avg = 0;
 
   useEffect(() => {
-    let currUser = value; 
+    let currUser = value;
     console.log(currUser);
     const getCurrStudent = (studentName) => {
       axios
@@ -37,9 +37,9 @@ export default function ShowCurrStudent() {
     if (gradesList.length !== 0) {
       gradesList.map(
         (grade, key) => (
-          (sum1 = sum1 + grade.grade * grade.credits),
-          (sum2 = sum2 + grade.credits),
-          (avg = (Math.round((sum1 / sum2) * 100) / 100).toFixed(2))
+          (cal1 = cal1 + grade.grade * grade.credits),
+          (cal2 = cal2 + grade.credits),
+          (avg = (Math.round((cal1 / cal2) * 100) / 100).toFixed(2))
         )
       );
     } else {
@@ -49,7 +49,7 @@ export default function ShowCurrStudent() {
 
   return (
     <>
-      <h2>Grades</h2>
+      <h2>{value}'s Grades</h2>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -79,7 +79,9 @@ export default function ShowCurrStudent() {
       </TableContainer>
       <br></br>
       <br></br>
-      <h3>{value}, your average is: {(myFunc(), avg)}</h3>
+      <h3>
+        {value}, your average is: {(myFunc(), avg)}
+      </h3>
     </>
   );
 }

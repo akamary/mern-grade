@@ -13,6 +13,8 @@ export default function Create() {
         grade: ''
     });
 
+    //const [type, setType] = useState("");
+
     const createStudent = () => {
         axios.post('https://mern-grade.herokuapp.com/students', student).then( () => {
           window.location.reload(false);
