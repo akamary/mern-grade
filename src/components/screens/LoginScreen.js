@@ -56,7 +56,7 @@ import { UserContext } from '../../UserContext';
     <div className="background-image">
     <div className= "login-screen">
     <form onSubmit={loginHandler} className="login-screen__form">
-      <h3 className="login-screen__title">Login</h3>
+      <h3 className="login-screen__title">Login - Grades System</h3>
       {error && <span className="error-message">{error}</span>}
       <div className="form-group">
         <label htmlFor="name">Username:</label>

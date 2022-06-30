@@ -1,0 +1,9 @@
+.background-screens {
+    background-image: url(./img/background-screens.jpg);
+    background-size: cover;
+    background-position: top;
+    min-height: 100%;
+    height: 100vh;
+    position: relative;
+}
+
