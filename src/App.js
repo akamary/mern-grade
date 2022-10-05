@@ -8,18 +8,11 @@ import { UserContext } from "./UserContext.js";
 import { useState, useMemo } from "react";
 import StudentsScreen from "./components/StudentsScreen";
 import PrivateRoute from "./components/routing/PrivateRoute.js";
-import PrivateScreen from "./components/screens/PrivateScreen.js";
 
 const App = () => {
   const [value, setValue] = useState(null);
   const providerValue = useMemo(() => ({ value, setValue }), [value, setValue]);
 
-  //<Route path="/student" element={<StudentsScreen />} />;
-  //<Route path="/login" element={<LoginScreen />} />
-  //<Route element={<LoginScreen />} path="/login" />;
-  //<Route path="/" element={<PrivateRoute />}>
-  //<Route element={<StudentsScreen />} path="/student" />
-  //</Route>;
   return (
     <Router>
       <div className="app">
@@ -32,7 +25,7 @@ const App = () => {
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/lecturer" element={<LecturerScreen />} />
-            <Route path="/student" element={<StudentsScreen />} />;
+            <Route path="/student:name" element={<StudentsScreen />} />;
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </UserContext.Provider>

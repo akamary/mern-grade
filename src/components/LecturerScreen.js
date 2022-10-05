@@ -6,7 +6,7 @@ import Create from "./createStudent/createStudent.js";
 import Button from "@mui/material/Button";
 import useStyles from "../styles";
 import { useState, useEffect } from "react";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import "./screens/backscreens.css";
@@ -32,7 +32,7 @@ const LecturerScreen = ({ history }) => {
 
       try {
         const { data } = await axios.get(
-          "https://mern-grade.herokuapp.com/api/private",
+          "http://localhost:5000/api/private",
           config
         );
         setPrivateData(data.data);
@@ -52,7 +52,11 @@ const LecturerScreen = ({ history }) => {
     <div className="background-screens">
       <div className="App">
         <Container maxWidth="md">
-          <AppBar className={classes.appBar} position="static" style={{backgroundColor: "teal"}}>
+          <AppBar
+            className={classes.appBar}
+            position="static"
+            style={{ backgroundColor: "teal" }}
+          >
             <Typography className={classes.heading} variant="h3" align="center">
               Welcome Lecturer!
             </Typography>
@@ -60,7 +64,7 @@ const LecturerScreen = ({ history }) => {
           <Grow in>
             <Container>
               <Grid
-                container 
+                container
                 justify="center"
                 align="center"
                 alignItems="center"
@@ -79,7 +83,11 @@ const LecturerScreen = ({ history }) => {
           </Grow>
         </Container>
         <Box textAlign="center" margin="30px">
-          <Button variant="outlined" startIcon={<LogoutIcon />} onClick={logoutHandler}>
+          <Button
+            variant="outlined"
+            startIcon={<LogoutIcon />}
+            onClick={logoutHandler}
+          >
             Logout{" "}
           </Button>
         </Box>

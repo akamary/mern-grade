@@ -8,11 +8,12 @@ import TableBody from "@mui/material/TableBody";
 import Paper from "@mui/material/Paper";
 import TableHead from "@mui/material/TableHead";
 import { UserContext } from "../../UserContext";
+import { useParams } from "react-router-dom";
 
 export default function ShowCurrStudent() {
   const [gradesList, setGradesList] = useState([]);
-
   const { value, setValue } = useContext(UserContext);
+  const { name } = useParams();
   let cal1 = 0;
   let cal2 = 0;
   let avg = 0;

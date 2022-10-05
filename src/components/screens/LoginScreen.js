@@ -1,21 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./LoginScreen.css";
 import "./background.css";
 import axios from "axios";
 import PersonIcon from "@mui/icons-material/Person";
 import { UserContext } from "../../UserContext";
-import {
-  Avatar,
-  Button,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-import LockIcon from "@mui/icons-material/Lock";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 
 const LoginScreen = () => {
   let navigate = useNavigate();
@@ -25,7 +14,7 @@ const LoginScreen = () => {
   const [error, setError] = useState("");
   const [usersList, setUsersList] = useState([]);
   const [isLogged, setIsLogged] = useState("");
-
+  const { name } = useParams();
   let ans;
   const { value, setValue } = useContext(UserContext);
 
@@ -62,7 +51,7 @@ const LoginScreen = () => {
           localStorage.setItem("flag", username);
           console.log(username);
           if (ans.type === "Lecturer") navigate("/lecturer");
-          else navigate("/student", { username });
+          else navigate(`/student:${ans.username}`, { username });
         });
     } catch (error) {
       setError(error.response.data.error);

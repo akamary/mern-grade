@@ -54,10 +54,10 @@ const RegisterScreen = ({ history }) => {
         setUsersList(allUsers.data);
         ans = allUsers.data.find((user) => user.username === username);
         setValue(ans.username);
+        localStorage.setItem("authToken", data.token);
+        if (type === "Lecturer") navigate("/lecturer");
+        else navigate(`/student:${ans.username}`, { username });
       });
-      localStorage.setItem("authToken", data.token);
-      if (type == "Lecturer") navigate("/lecturer");
-      else navigate("/student");
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
