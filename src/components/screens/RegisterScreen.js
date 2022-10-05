@@ -1,24 +1,25 @@
-import React from 'react';
-import { useState, useEffect, useContext} from 'react';
-import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
+import React from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "./RegisterScreen.css";
-import "./background.css"
-import { UserContext } from '../../UserContext';
+import "./background.css";
+import { UserContext } from "../../UserContext";
 
-const RegisterScreen = ({history})=> {
-  let navigate=useNavigate();
+const RegisterScreen = ({ history }) => {
+  let navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const {value, setValue} = useContext(UserContext);
+  const { value, setValue } = useContext(UserContext);
   const [usersList, setUsersList] = useState([]);
   let ans;
 
   useEffect(() => {
-    if(localStorage.getItem("authToken")) {
+    if (localStorage.getItem("authToken")) {
       navigate("/");
     }
   }, [history]);
@@ -31,27 +32,32 @@ const RegisterScreen = ({history})=> {
         "Content-Type": "application/json",
       },
     };
-    if(password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setPassword("");
       setConfirmPassword("");
       setTimeout(() => {
-        setError("")
-      }, 5000 );
-      return setError("Password do not match")
+        setError("");
+      }, 5000);
+      return setError("Password do not match");
     }
+    //console.log(type, username, password);
+    //const {data} = await axios.post("https://mern-grade.herokuapp.com/api/auth/register", {username,email, password, type}, config);
+    //axios.get('https://mern-grade.herokuapp.com/api/auth/login').then((allUsers) => {
     try {
       console.log(type, username, password);
-      const {data} = await axios.post("https://mern-grade.herokuapp.com/api/auth/register", {username, password, type}, config);
-      axios.get('https://mern-grade.herokuapp.com/api/auth/login').then((allUsers) => {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        { username, email, password, type },
+        config
+      );
+      axios.get("http://localhost:5000/api/auth/login").then((allUsers) => {
         setUsersList(allUsers.data);
-        ans = allUsers.data.find(user =>user.username===username);
+        ans = allUsers.data.find((user) => user.username === username);
         setValue(ans.username);
       });
       localStorage.setItem("authToken", data.token);
-      if (type=="Lecturer")
-        navigate("/lecturer");
-      else
-        navigate("/student");
+      if (type == "Lecturer") navigate("/lecturer");
+      else navigate("/student");
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -62,56 +68,78 @@ const RegisterScreen = ({history})=> {
 
   return (
     <div className="background-image">
-      <div className= "register-screen">
+      <div className="register-screen">
         <form onSubmit={registerHandler} className="register-screen__form">
-        <h3 className="register-screen__title">Register</h3>
+          <h3 className="register-screen__title">Register</h3>
           {error && <span className="error-message">{error}</span>}
-        <div className="form-group">
-          <label htmlFor="name">Username:</label>
-          <input 
-            type="text" 
-            required id="name" 
-            placeholder="Enter username" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="name">Username:</label>
+            <input
+              type="text"
+              required
+              id="name"
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="type">Type: </label>
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option hidden></option>
-          <option value="Student">Student</option>
-          <option value="Lecturer">Lecturer</option>
-        </select> 
+          <div className="form-group">
+            <label htmlFor="name">Email:</label>
+            <input
+              type="email"
+              required
+              id="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="type">Type: </label>
+            <select value={type} onChange={(e) => setType(e.target.value)}>
+              <option hidden></option>
+              <option value="Student">Student</option>
+              <option value="Lecturer">Lecturer</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              required
+              id="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmpassword">Confirm Password:</label>
+            <input
+              type="password"
+              required
+              id="confirmpassword"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary">
+            Register
+          </button>
+
+          <span className="register-screen__subtext">
+            Already have an account? <Link to="/login">Login</Link>
+          </span>
+        </form>
       </div>
-
-      <div className="form-group">
-        <label htmlFor="password">Password:</label>
-        <input 
-        type="password" 
-        required id="password" 
-        placeholder="Enter password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)}/>
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="confirmpassword">Confirm Password:</label>
-        <input 
-        type="password" 
-        required id="confirmpassword" 
-        placeholder="Confirm password" 
-        value={confirmPassword} 
-        onChange={(e) => setConfirmPassword(e.target.value)}/>
-      </div>
-
-      <button type= "submit" className= "btn btn-primary">Register</button>
-
-      <span className="register-screen__subtext">Already have an account? <Link to="/login">Login</Link></span>
-    </form></div>
-      </div>
-      );
+    </div>
+  );
 };
 
 export default RegisterScreen;

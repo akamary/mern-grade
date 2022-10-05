@@ -17,23 +17,23 @@ import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-
-const LoginScreen = ({ history }) => {
+const LoginScreen = () => {
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [usersList, setUsersList] = useState([]);
+  const [isLogged, setIsLogged] = useState("");
 
   let ans;
   const { value, setValue } = useContext(UserContext);
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      navigate("/");
+      navigate("/student");
     }
-  }, [history]);
+  }, [navigate]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -45,20 +45,24 @@ const LoginScreen = ({ history }) => {
     };
     try {
       const { data } = await axios.post(
-        "https://mern-grade.herokuapp.com/api/auth/login",
+        //"https://mern-grade.herokuapp.com/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         { username, password },
         config
       );
-
+      console.log(data);
       axios
-        .get("https://mern-grade.herokuapp.com/api/auth/login")
+        //.get("https://mern-grade.herokuapp.com/api/auth/login")
+        .get("http://localhost:5000/api/auth/login")
         .then((allUsers) => {
           setUsersList(allUsers.data);
           ans = allUsers.data.find((user) => user.username === username);
           setValue(ans.username);
           localStorage.setItem("authToken", data.token);
-          if (ans.type == "Lecturer") navigate("/lecturer");
-          else navigate("/student");
+          localStorage.setItem("flag", username);
+          console.log(username);
+          if (ans.type === "Lecturer") navigate("/lecturer");
+          else navigate("/student", { username });
         });
     } catch (error) {
       setError(error.response.data.error);
@@ -67,15 +71,16 @@ const LoginScreen = ({ history }) => {
       }, 5000);
     }
   };
-  return(
-  <div className="background-image">
+  return (
+    <div className="background-image">
       <div className="login-screen">
         <form onSubmit={loginHandler} className="login-screen__form">
           <h3 className="login-screen__title">Sign in</h3>
           {error && <span className="error-message">{error}</span>}
-          <div className="form-group" >
+          <div className="form-group">
             <label htmlFor="name">Username:</label>
-            <input startIcon={<PersonIcon />}
+            <input
+              startIcon={<PersonIcon />}
               type="text"
               required
               id="name"
@@ -105,7 +110,7 @@ const LoginScreen = ({ history }) => {
           </span>
         </form>
       </div>
-    </div> 
+    </div>
   );
 };
 export default LoginScreen;

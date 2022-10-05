@@ -1,31 +1,41 @@
-import React from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginScreen from "./components/screens/LoginScreen.js";
 import RegisterScreen from "./components/screens/RegisterScreen.js";
 import LecturerScreen from "./components/LecturerScreen.js";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
-import { UserContext } from './UserContext.js';
-import { useState , useMemo} from 'react';
-import StudentsScreen from './components/StudentsScreen';
-
+import { UserContext } from "./UserContext.js";
+import { useState, useMemo } from "react";
+import StudentsScreen from "./components/StudentsScreen";
+import PrivateRoute from "./components/routing/PrivateRoute.js";
+import PrivateScreen from "./components/screens/PrivateScreen.js";
 
 const App = () => {
-  const [value, setValue] = useState(null)
-  const providerValue = useMemo(() => ({ value, setValue}), [value, setValue]);
+  const [value, setValue] = useState(null);
+  const providerValue = useMemo(() => ({ value, setValue }), [value, setValue]);
 
+  //<Route path="/student" element={<StudentsScreen />} />;
+  //<Route path="/login" element={<LoginScreen />} />
+  //<Route element={<LoginScreen />} path="/login" />;
+  //<Route path="/" element={<PrivateRoute />}>
+  //<Route element={<StudentsScreen />} path="/student" />
+  //</Route>;
   return (
     <Router>
       <div className="app">
         <UserContext.Provider value={providerValue}>
-      <Routes>
-        <Route path="/" element={<LecturerScreen/>}/>
-        <Route path="/login" element={<LoginScreen/>}/>
-        <Route path="/register" element={<RegisterScreen/>}/>
-        <Route path="/lecturer" element={<LecturerScreen />}/>
-        <Route path="/student" element= {<StudentsScreen/>} />
-        <Route path="*" element={<ErrorPage />}/> 
-      </Routes>
-      </UserContext.Provider>
+          <Routes>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route element={<StudentsScreen />} path="/student" />
+              <Route path="/" element={<LoginScreen />} />
+            </Route>
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/lecturer" element={<LecturerScreen />} />
+            <Route path="/student" element={<StudentsScreen />} />;
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </UserContext.Provider>
       </div>
     </Router>
   );

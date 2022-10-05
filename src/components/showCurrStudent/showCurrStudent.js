@@ -18,13 +18,15 @@ export default function ShowCurrStudent() {
   let avg = 0;
 
   useEffect(() => {
-    let currUser = value;
+    let currUser = localStorage.getItem("flag");
     console.log(currUser);
+
     const getCurrStudent = (studentName) => {
       axios
-        .get(`https://mern-grade.herokuapp.com/students/${studentName}`)
-        .then((userGrades) => {
-          setGradesList(userGrades.data);
+        //.get(`https://mern-grade.herokuapp.com/students/${studentName}`)
+        .get(`http://localhost:5000/students/${studentName}`)
+        .then((gradesList) => {
+          setGradesList(gradesList.data);
         });
     };
 

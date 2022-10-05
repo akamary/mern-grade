@@ -10,15 +10,18 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import "./screens/backscreens.css";
 
-const StudentsScreen = ({ history }) => {
+const StudentsScreen = () => {
   const classes = useStyles();
   let navigate = useNavigate();
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
   const { value, setValue } = useContext(UserContext);
-  let currUser = value; 
+
+  let currUser = localStorage.getItem("flag");
+  console.log(currUser);
 
   useEffect(() => {
+    currUser = localStorage.getItem("flag");
     if (!localStorage.getItem("authToken")) {
       navigate("/login");
     }
@@ -33,19 +36,23 @@ const StudentsScreen = ({ history }) => {
 
       try {
         const { data } = await axios.get(
-          "https://mern-grade.herokuapp.com/api/private",
+          //"https://mern-grade.herokuapp.com/api/private",
+          "http://localhost:5000/api/private",
           config
         );
+        console.log(data);
         setPrivateData(data.data);
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized, please log in first");
       }
     };
+
     fetchPrivateData();
-  }, [history]);
+  }, [navigate]);
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("flag");
     navigate("/login");
   };
 
@@ -56,7 +63,7 @@ const StudentsScreen = ({ history }) => {
           <AppBar
             className={classes.appBar}
             position="static"
-            style={{backgroundColor: "teal"}}
+            style={{ backgroundColor: "teal" }}
           >
             <Typography className={classes.heading} variant="h3" align="center">
               Welcome {currUser}!
@@ -66,7 +73,7 @@ const StudentsScreen = ({ history }) => {
           <Grow in>
             <Container>
               <Grid
-                container 
+                container
                 justify="center"
                 align="center"
                 alignItems="center"
