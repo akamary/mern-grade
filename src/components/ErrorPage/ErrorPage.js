@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./ErrorPage.css";
 
 const NotFound = () => (
@@ -15,9 +16,7 @@ const NotFound = () => (
         className="wrong-container btn"
         type="button"
         onClick={(e) => {
-          e.preventDefault();
-          window.location.href =
-            "http://localhost:3000/";
+          HandleClick(e);
         }}
       >
         Go Back
@@ -25,5 +24,13 @@ const NotFound = () => (
     </div>
   </div>
 );
+
+const HandleClick = (e) => {
+  e.preventDefault();
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("flag");
+  let navigate = useNavigate();
+  navigate("http://localhost:3000/login");
+};
 
 export default NotFound;

@@ -50,7 +50,7 @@ const LoginScreen = () => {
           localStorage.setItem("authToken", data.token);
           localStorage.setItem("flag", username);
           console.log(username);
-          if (ans.type === "Lecturer") navigate("/lecturer");
+          if (ans.type === "Lecturer") navigate(`/lecturer:${ans.username}`);
           else navigate(`/student:${ans.username}`, { username });
         });
     } catch (error) {

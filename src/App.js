@@ -19,13 +19,12 @@ const App = () => {
         <UserContext.Provider value={providerValue}>
           <Routes>
             <Route path="/" element={<PrivateRoute />}>
-              <Route element={<StudentsScreen />} path="/student" />
-              <Route path="/" element={<LoginScreen />} />
+              <Route element={<StudentsScreen />} path="/student:name" />
             </Route>
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/lecturer" element={<LecturerScreen />} />
-            <Route path="/student:name" element={<StudentsScreen />} />;
+            <Route path="/lecturer:name" element={<LecturerScreen />} />
+
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </UserContext.Provider>

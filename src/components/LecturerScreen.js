@@ -5,19 +5,26 @@ import Student from "./showStudent/showStudent.js";
 import Create from "./createStudent/createStudent.js";
 import Button from "@mui/material/Button";
 import useStyles from "../styles";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import "./screens/backscreens.css";
+import { UserContext } from "../UserContext.js";
 
-const LecturerScreen = ({ history }) => {
+const LecturerScreen = () => {
   const classes = useStyles();
   let navigate = useNavigate();
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
+  const { value, setValue } = useContext(UserContext);
+
+  let currUser = localStorage.getItem("flag");
+  console.log(currUser);
+  let ans;
 
   useEffect(() => {
+    let currUser = localStorage.getItem("flag");
     if (!localStorage.getItem("authToken")) {
       navigate("/login");
     }
@@ -36,13 +43,17 @@ const LecturerScreen = ({ history }) => {
           config
         );
         setPrivateData(data.data);
+
+        ans = data.data.find((user) => user.username === currUser);
+        setValue(ans.username);
+        localStorage.setItem("authToken", data.token);
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized, please log in first");
       }
     };
     fetchPrivateData();
-  }, [history]);
+  }, []);
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
     navigate("/login");
