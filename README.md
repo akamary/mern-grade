@@ -17,6 +17,7 @@ By implementing a backend app using Express.js and a frontend app using Reactjs.
 * Axios
 * MaterialUI
 * Bootstrap
+*Netlify
+*Heroku
 ## more:
-The app deployed to Heroku and Netlify, but currently on local for changes:
-client http://localhost:3000 and the server http://localhost:5000
+The app deployed to  and Netlify.
