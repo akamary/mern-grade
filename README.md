@@ -19,5 +19,4 @@ By implementing a backend app using Express.js and a frontend app using Reactjs.
 * Bootstrap
 * Netlify
 * Heroku
-## more:
-The app deployed to  and Netlify.
+
